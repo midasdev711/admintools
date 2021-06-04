@@ -54,7 +54,6 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                required=""
                 class="mt-4 placeholder-gray-300 tracking-widest text-center appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none  sm:text-sm"
               />
             </div>
@@ -69,7 +68,6 @@
                 name="password"
                 type="password"
                 autocomplete="current-password"
-                required=""
                 class="mt-4 tracking-widest text-center placeholder-gray-300 appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none sm:text-sm"
               />
             </div>
