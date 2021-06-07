@@ -1,14 +1,40 @@
-import APIService from "@/http.js";
-const API = new APIService();
+import fb from '../firebase/init';
 
-export default class AuthService {
-  async signIn (payload) {
-    let res = await API.post('/api/token', payload);
-    return res.data;
-  }
+export default {
+  // register with email and password
+  register(payload: any) {
+    return fb.auth.createUserWithEmailAndPassword( payload.email, payload.password )
+    .then((res: any) => {
+      return res;
+    }).catch((err: any) => {
+      throw err
+    })
+  },
 
-  async adminSignIn (payload) {
-    let res = await API.post('/api/admin/token', payload);
-    return res.data;
+  login(user: any) {
+    // signin with email and password
+    return fb.auth
+      .signInWithEmailAndPassword(
+        user.email,
+        user.password
+      )
+      .then((data: any) => {
+        return data;
+      })
+      .catch((err: any) => {
+        throw err;
+      })
+  },
+
+  logout() {
+    //sign current user out
+    return fb.auth
+      .signOut()
+      .then(() => {
+        return true;
+      })
+      .catch((err: any) => {
+        throw err;
+      });
   }
 }

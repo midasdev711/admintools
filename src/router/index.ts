@@ -2,6 +2,7 @@ import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
 import AuthLayout from '../layouts/authlayout.vue'
 import Login from '../views/auth/login.vue'
 import Register from '../views/auth/register.vue'
+import Dashboard from '../views/dashboard/dashboard.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -23,6 +24,17 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Register',
         component: Register,
       },
+    ]
+  },
+  {
+    path: "/",
+    component: AuthLayout,
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: Dashboard,
+      }
     ]
   }
 ]

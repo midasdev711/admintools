@@ -29,6 +29,7 @@
           class="space-y-6"
           action="#"
           method="POST"
+          @submit="submit"
         >
           <div>
             <div class="mt-1 shadow-2xl">
@@ -40,6 +41,7 @@
                 autocomplete="email"
                 required=""
                 class="mt-4 placeholder-gray-300 tracking-widest text-left appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none  sm:text-sm"
+                v-model="form.email"
               />
             </div>
           </div>
@@ -54,6 +56,7 @@
                 autocomplete="current-password"
                 required=""
                 class="mt-4 tracking-widest text-left placeholder-gray-300 appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none sm:text-sm"
+                v-model="form.password"
               />
             </div>
           </div>
@@ -68,6 +71,7 @@
                 autocomplete="current-password"
                 required=""
                 class="mt-4 tracking-widest text-left placeholder-gray-300 appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none sm:text-sm"
+                v-model="confirmpassword"
               />
             </div>
           </div>
@@ -169,13 +173,25 @@
 </template>
 
 <script lang="ts">
+import { mapActions } from 'vuex';
 export default {
   name: 'Register',
-  components: {
-    form: {
-      email: null,
-      password: null
+  data() {
+    return {
+      form: {
+        email: null,
+        password: null
+      },
+      confirmpassword: null
     }
   },
+  methods: {
+    ...mapActions('auth', ['register']),
+    async submit(event: Event) {
+      event.preventDefault();
+      let res = await this.register(this.form);
+      console.log(res)
+    }
+  }
 }
 </script>
