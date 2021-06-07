@@ -25,7 +25,9 @@ const actions: IActions = {
 
   register({ commit }, payload) {
     return AuthService.register(payload).then((res: any) => {
-      return res;
+      return AuthService.sendVerificationEmail()?.then((data: any) => {
+        return data;
+      });
     }).catch((err: any) => {
       throw err;
     })

@@ -1,14 +1,15 @@
 import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
 import AuthLayout from '../layouts/authlayout.vue'
+import DefaultLayout from '../layouts/defaultlayout.vue'
 import Login from '../views/auth/login.vue'
 import Register from '../views/auth/register.vue'
 import Dashboard from '../views/dashboard/dashboard.vue'
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    redirect: '/auth'
-  },
+  // {
+  //   path: "/",
+  //   redirect: '/auth'
+  // },
   {
     path: "/auth",
     redirect: '/auth/login',
@@ -28,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
-    component: AuthLayout,
+    component: DefaultLayout,
     children: [
       {
         path: 'dashboard',

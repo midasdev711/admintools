@@ -36,5 +36,11 @@ export default {
       .catch((err: any) => {
         throw err;
       });
+  },
+
+  sendVerificationEmail() {
+    if (fb.auth.currentUser){
+      return fb.auth.currentUser.sendEmailVerification();
+    } 
   }
 }
