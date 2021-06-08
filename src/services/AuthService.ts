@@ -3,12 +3,7 @@ import fb from '../firebase/init';
 export default {
   // register with email and password
   register(payload: any) {
-    return fb.auth.createUserWithEmailAndPassword( payload.email, payload.password )
-    .then((res: any) => {
-      return res;
-    }).catch((err: any) => {
-      throw err
-    })
+    return fb.auth.createUserWithEmailAndPassword( payload.email, payload.password );
   },
 
   login(user: any) {
@@ -17,30 +12,24 @@ export default {
       .signInWithEmailAndPassword(
         user.email,
         user.password
-      )
-      .then((data: any) => {
-        return data;
-      })
-      .catch((err: any) => {
-        throw err;
-      })
+      );
   },
 
   logout() {
     //sign current user out
     return fb.auth
-      .signOut()
-      .then(() => {
-        return true;
-      })
-      .catch((err: any) => {
-        throw err;
-      });
+      .signOut();
   },
 
   sendVerificationEmail() {
     if (fb.auth.currentUser){
       return fb.auth.currentUser.sendEmailVerification();
     } 
+  },
+
+  loadCurrentUser() {
+    return fb.auth.onAuthStateChanged(user => {
+      return user;
+    })
   }
 }

@@ -1,12 +1,10 @@
 import { ActionContext, ActionTree, MutationTree, GetterTree } from 'vuex';
 
 export type User = {
-  name: '';
+  displayName: '';
   email: '';
-  id: '';
-  role: '';
-  from_name: '';
-  from_email: '';
+  emailVerified: boolean;
+  uid: '';
 };
 
 export type UserLoginPayload = {
@@ -18,6 +16,7 @@ export interface IState {
   isLoading: boolean;
   isLoggedIn: boolean;
   user: User;
+  user_id: string;
 };
 
 export interface IGetters extends GetterTree<IState, IState> {

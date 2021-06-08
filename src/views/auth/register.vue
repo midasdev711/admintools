@@ -25,54 +25,55 @@
 
         </div>
 
-        <form
+        <Form
           class="space-y-6"
           action="#"
           method="POST"
+          :validation-schema="schema"
           @submit="submit"
         >
           <div>
             <div class="mt-1 shadow-2xl">
-              <input
+              <Field
                 id="email"
                 placeholder="email"
                 name="email"
                 type="email"
                 autocomplete="email"
-                required=""
                 class="mt-4 placeholder-gray-300 tracking-widest text-left appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none  sm:text-sm"
                 v-model="form.email"
               />
+              <ErrorMessage name="email" />
             </div>
           </div>
 
           <div>
             <div class="mt-1 shadow-2xl">
-              <input
+              <Field
                 id="password"
                 placeholder="password"
                 name="password"
                 type="password"
                 autocomplete="current-password"
-                required=""
                 class="mt-4 tracking-widest text-left placeholder-gray-300 appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none sm:text-sm"
                 v-model="form.password"
               />
+              <ErrorMessage name="password" />
             </div>
           </div>
 
           <div>
             <div class="mt-1 shadow-2xl">
-              <input
+              <Field
                 id="confirmpassword"
                 placeholder="confirm password"
                 name="confirmpassword"
                 type="password"
                 autocomplete="current-password"
-                required=""
                 class="mt-4 tracking-widest text-left placeholder-gray-300 appearance-none bg-yellow-50  block w-full px-3 py-1 border border-black 	 rounded-md shadow-2xl focus:outline-none sm:text-sm"
                 v-model="confirmpassword"
               />
+              <ErrorMessage name="confirmpassword" />
             </div>
           </div>
 
@@ -174,22 +175,38 @@
 
 <script lang="ts">
 import { mapActions } from 'vuex';
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import * as yup from 'yup';
 export default {
   name: 'Register',
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
   data() {
     return {
       form: {
-        email: null,
-        password: null
+        email: "",
+        password: ""
       },
-      confirmpassword: null
+      confirmpassword: "",
+      schema: yup.object({
+        email: yup.string().required('Email is required.').email('Email must be valid.'),
+        password: yup.string().required('Password is required.').min(8),
+        confirmpassword: yup.string()
+                .oneOf([yup.ref('password'), null], 'Passwords must match')
+                .required('Confirm Password is required'),
+      })
     }
   },
   methods: {
     ...mapActions('auth', ['register']),
-    async submit(event: Event) {
-      event.preventDefault();
+    async submit() {
       let res = await this.register(this.form);
+      if (res && res["message"]) {
+        this.$notify({ type: "error", text: res.message });
+      }
       console.log(res)
     }
   }
