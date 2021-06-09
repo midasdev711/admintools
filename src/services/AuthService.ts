@@ -8,6 +8,7 @@ export default {
 
   login(user: any) {
     // signin with email and password
+    console.log(user.email, user.password)
     return fb.auth
       .signInWithEmailAndPassword(
         user.email,

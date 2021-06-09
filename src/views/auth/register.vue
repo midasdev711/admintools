@@ -206,8 +206,10 @@ export default {
       let res = await this.register(this.form);
       if (res && res["message"]) {
         this.$notify({ type: "error", text: res.message });
+      } else {
+        localStorage.setItem("uid", res.uid);
+        this.$router.push('/dashboard');
       }
-      console.log(res)
     }
   }
 }

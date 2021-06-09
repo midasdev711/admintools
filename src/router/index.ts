@@ -4,6 +4,7 @@ import LightLayout from '../layouts/lightlayout.vue'
 import Login from '../views/auth/login.vue'
 import Register from '../views/auth/register.vue'
 import Dashboard from '../views/dashboard/dashboard.vue'
+import Profile from '../views/profile.vue'
 
 const routes: Array<RouteRecordRaw> = [
   // {
@@ -36,6 +37,11 @@ const routes: Array<RouteRecordRaw> = [
         path: 'dashboard',
         name: 'Dashboard',
         component: Dashboard,
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: Profile,
       }
     ]
   }

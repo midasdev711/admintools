@@ -104,7 +104,7 @@
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 py-1 focus:outline-none">
                   <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                    <router-link :to="item.href" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</router-link>
+                    <router-link :to="item.href" @click="item.action" :class="[active ? 'bg-gray-100' : '', 'block py-2 px-4 text-sm text-gray-700']">{{ item.name }}</router-link>
                   </MenuItem>
                 </MenuItems>
               </transition>
@@ -144,6 +144,8 @@ import {
   XIcon,
 } from '@heroicons/vue/outline'
 import { SearchIcon } from '@heroicons/vue/solid'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
@@ -153,11 +155,7 @@ const navigation = [
   { name: 'Documents', href: '#', icon: InboxIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
-const userNavigation = [
-  { name: 'Your Profile', href: '/profile' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
+
 
 export default {
   components: {
@@ -174,13 +172,27 @@ export default {
     SearchIcon,
     XIcon,
   },
-  setup() {
+  setup({ root }) {
     const sidebarOpen = ref(false)
+    const store = useStore()
+    const router = useRouter()
+
+    const logout = async () => {
+      await store.dispatch('auth/logout')
+      router.push('/auth')
+    }
+
+    const userNavigation = [
+      { name: 'Your Profile', href: '/profile' },
+      { name: 'Settings', href: '#' },
+      { name: 'Sign out', href: '#', action: logout },
+    ]
 
     return {
       navigation,
       userNavigation,
       sidebarOpen,
+      logout
     }
   },
 }

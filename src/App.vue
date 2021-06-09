@@ -12,7 +12,7 @@ export default {
   methods: {
     ...mapActions('auth', ['loadCurrentUser']),
   },
-  async mounted() {
+  async created() {
     await this.loadCurrentUser();
   }
 }

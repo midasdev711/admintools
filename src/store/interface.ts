@@ -12,17 +12,28 @@ export type UserLoginPayload = {
   password: ''
 }
 
+export type UserProfilePayload = {
+  uid: "",
+  firstname: "",
+  lastname: "",
+  email: "",
+  timezone: "",
+  country: "",
+  state: "",
+  city: "",
+  postalcode: "",
+  streetaddress: "",
+  countryphone: "",
+  phonenumber: ""
+}
+
 export interface IState {
-  isLoading: boolean;
-  isLoggedIn: boolean;
-  user: User;
-  user_id: string;
+  user: any;
+  user_id: any;
 };
 
 export interface IGetters extends GetterTree<IState, IState> {
-  getUser(): User;
-  isLoggedIn(): boolean;
-  isLoading(): boolean;
+  userId(): string;
 };
 
 export interface IMutations extends MutationTree<IState> {
@@ -32,4 +43,7 @@ export interface IMutations extends MutationTree<IState> {
 export interface IActions extends ActionTree<IState, IState> {
   login(ctx: ActionContext<IState, IState>, payload?: UserLoginPayload): Promise<UserLoginPayload>;
   register(ctx: ActionContext<IState, IState>, payload?: UserLoginPayload): Promise<UserLoginPayload>;
+  logout(ctx: ActionContext<IState, IState>): Promise<boolean>;
+  setProfile(ctx: ActionContext<IState, IState>, payload?: UserProfilePayload): Promise<boolean>;
+  getProfile(ctx: ActionContext<IState, IState>, uid?: string): Promise<any>;
 };
